@@ -27,7 +27,7 @@ def register_bloguser(request):
     
 @api_view(['POST'])
 def user_login(request):
-    username = request.data.get('username')
+    username = request.data.get('name')
     password = request.data.get('password')
     
     user = None
