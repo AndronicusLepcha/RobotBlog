@@ -12,7 +12,7 @@ function Header() {
   const navItems = [
     {
       name: "Home",
-      slug: "/",
+      slug: "/home",
       active: true,
     },
     {
@@ -36,8 +36,6 @@ function Header() {
       active: authStatus,
     },
   ];
-  console.log("Header is called");
-  console.log("navItems:", navItems);
   return (
     <header className="py-3 shadow bg-blue-300">
       <Container>
