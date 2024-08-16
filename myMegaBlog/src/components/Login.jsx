@@ -76,9 +76,7 @@ function Login() {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
-              Sign in
-            </Button>
+            <Button type="submit" className="w-full bg-cyan-400 rounded-xl py-4 px-4" childern="Sign In"/>
           </div>
         </form>
       </div>

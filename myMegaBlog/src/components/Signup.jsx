@@ -9,17 +9,16 @@ import { useForm } from "react-hook-form";
 function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, setError } = useState("");
+  const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
 
   const create = async (data) => {
+    console.log("signup data", data);
     setError("");
     try {
-      // await // call the api
       const userdata = await authService.createAccount(data);
       if (userdata) {
         const userData = await authService.getCurrentUser();
-
         if (userData) dispatch(login(userData));
         navigate("/");
       }
@@ -56,7 +55,7 @@ function Signup() {
             <Input
               label="Full Name: "
               placeholder="Enter your full name"
-              {...register("name", {
+              {...register("username", {
                 required: true,
               })}
             />
@@ -81,9 +80,12 @@ function Signup() {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
-              Create Account
-            </Button>
+            <Button
+              type="submit"
+              className="w-full bg-cyan-400 rounded-xl py-4 px-4"
+              childern="Create Account"
+              bgColor="bg-green-500"
+            />
           </div>
         </form>
       </div>
