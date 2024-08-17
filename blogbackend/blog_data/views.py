@@ -27,7 +27,8 @@ def register_bloguser(request):
     
 @api_view(['POST'])
 def user_login(request):
-    username = request.data.get('name')
+    print(request.data)
+    username = request.data.get('username')
     password = request.data.get('password')
     
     user = None
@@ -41,7 +42,7 @@ def user_login(request):
         
     if user:
         token, _= Token.objects.get_or_create(user=user)
-        return Response({'token':token.key},status=status.HTTP_200_OK)
+        return Response({'token':token.key,'userData':request.data},status=status.HTTP_200_OK)
     return Response({'error':'Invalid Credentails'},status=status.HTTP_401_UNAUTHORIZED)
 
 
