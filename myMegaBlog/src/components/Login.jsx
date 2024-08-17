@@ -11,19 +11,19 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const { error, setError } = useState("");
+  const [error, setError] = useState("");
 
   const login = async (data) => {
     setError("");
     try {
       const session = true;
-      // const session=await // call the api to login
-
       if (session) {
-        const userData = await authService.getCurrentUser();
-        if (userData) {
-          dispatch(UserLogin(userData));
-          navigate("/");
+        const response = await authService.login(data);
+        console.log("Response from the api",response);
+        if (response) {
+          localStorage.setItem("authToken", response.token);
+          dispatch(UserLogin(response));
+          navigate("/home");
         }
       }
     } catch (error) {
@@ -53,13 +53,13 @@ function Login() {
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(login)} className="mt-8">
+        <form onSubmit={handleSubmit(login)}>
           <div className="space-y-5">
             <Input
-              label="Email: "
-              placeholder="Enter your email"
-              type="email"
-              {...register("email", {
+              label="username: "
+              placeholder="Enter your username"
+              type="username"
+              {...register("username", {
                 required: true,
                 validate: {
                   matchPatern: (value) =>
@@ -76,7 +76,12 @@ function Login() {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full bg-cyan-400 rounded-xl py-4 px-4" childern="Sign In"/>
+            <Button
+              type="submit"
+              className="w-full bg-cyan-400 rounded-xl py-4 px-4"
+              childern="Sign In"
+              bgColor="bg-green-500"
+            />
           </div>
         </form>
       </div>
