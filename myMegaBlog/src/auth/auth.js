@@ -13,7 +13,6 @@ export class AuthService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-      console.log("result to store at the time of login ",result)
       return result;
     } catch (error) {
         console.error('error registering user',error);
