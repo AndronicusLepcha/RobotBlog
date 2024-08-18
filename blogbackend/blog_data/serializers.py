@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BlogUsers
+from .models import BlogUsers, PostData
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,3 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validate_data['password'])
         user.save()
         return user
+    
+class PostDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostData
+        fields = ['title','tags','description']
+        
