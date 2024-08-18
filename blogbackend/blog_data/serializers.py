@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
         
     def create(self,validate_data):
+        print("Data from frontend",validate_data)
         user = BlogUsers(
             username = validate_data['username'],
             email=validate_data['email']
