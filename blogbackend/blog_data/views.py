@@ -12,7 +12,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import BlogUsers
+from .models import BlogUsers,PostData,Tag
 
 
 @api_view(['POST']) 
@@ -68,4 +68,30 @@ def user_logout(request):
         # Log the exception and return a 500 error response
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    
+@api_view(['POST'])
+def createPost(request):
+    try:
+        title = request.data.get("title")
+        tags = request.data.get("tags")  # Expecting a list of tag names
+        description = request.data.get("description")
+
+        tag_objects = []
+        for tag_name in tags:
+            tag, created = Tag.objects.get_or_create(name=tag_name)
+            tag_objects.append(tag)
+        
+        # Create PostData object
+        postObj = PostData(
+            title=title,
+            description=description
+        )
+        postObj.save()
+        
+        # Add tags to the PostData object
+        postObj.tags.set(tag_objects)  # ManyToManyField
+        postObj.save()
+        
+        return Response({'message': 'Post successfully created.'}, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
