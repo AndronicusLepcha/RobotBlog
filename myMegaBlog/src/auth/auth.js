@@ -15,8 +15,8 @@ export class AuthService {
       const result = await response.json();
       return result;
     } catch (error) {
-        console.error('error registering user',error);
-        throw error;
+      console.error("error registering user", error);
+      throw error;
     }
   }
 
@@ -29,18 +29,17 @@ export class AuthService {
         },
         body: JSON.stringify(logindata),
       });
-  
+
       if (!response.ok) {
-        const errorData = await response.json(); 
-        throw new Error(errorData.message || 'Login failed'); 
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
-  
-      const data = await response.json(); 
+
+      const data = await response.json();
       return data;
-  
     } catch (error) {
-      console.error("Login error:", error); 
-      throw error; 
+      console.error("Login error:", error);
+      throw error;
     }
   }
 
@@ -53,8 +52,22 @@ export class AuthService {
     // delete the session
     // this is an promoise
   }
-  async getPosts() {
-    return null;
+  async getAllPosts() {
+    try {
+      const response = await fetch(`${conf.API_URL}/blog/getAllPost`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("daat to return ",data)
+        return data;
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

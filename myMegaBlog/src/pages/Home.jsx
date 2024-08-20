@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useId } from "react";
 import authService from "../auth/auth";
 import { Container } from "../components";
 import { Postcard } from "../components";
@@ -8,12 +8,13 @@ function Home() {
   const authStatus = useSelector((state) => state.auth.status);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    // define and write the getPost logic
-    authService.getPosts().then((posts) => {
-      if (posts) {
-        setPosts(posts.documents);
-      }
-    });
+    const fetchPost = async () => {
+      const data = await authService.getAllPosts();
+      console.log("all post received ", data);
+      setPosts(data);
+      console.log("usestate data", posts);
+    };
+    fetchPost();
   }, []);
 
   if (posts.length === 0 && authStatus) {
@@ -43,7 +44,7 @@ function Home() {
         </Container>
       </div>
     );
-  } else if(!authStatus) {
+  } else if (!authStatus) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
@@ -75,15 +76,17 @@ function Home() {
   }
   return (
     <div className="w-full py-8">
-      <Container>
-        <div className="flex flex-wrap">
-          {posts.map((post) => (
-            <div key={post.$id} className="p-2 w-1/4">
+       <div className="flex flex-wrap">
+        {posts.length === 0 ? (
+          <div>No posts available</div>
+        ) : (
+          posts.map((post) => (
+            <div key={post.id} className="p-2 w-1/4">
               <Postcard {...post} />
             </div>
-          ))}
-        </div>
-      </Container>
+          ))
+        )}
+      </div>
     </div>
   );
 }
