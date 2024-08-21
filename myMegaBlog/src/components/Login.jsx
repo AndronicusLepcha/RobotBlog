@@ -19,10 +19,10 @@ function Login() {
       const session = true;
       if (session) {
         const response = await authService.login(data);
-        console.log("Response from the api",response);
         if (response) {
           localStorage.setItem("authToken", response.token);
           dispatch(UserLogin(response));
+          console.log("login success full ")
           navigate("/home");
         }
       }

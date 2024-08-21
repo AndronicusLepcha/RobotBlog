@@ -20,5 +20,5 @@ class UserSerializer(serializers.ModelSerializer):
 class PostDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostData
-        fields = ['title','tags','description']
+        fields = ['id','title','tags','description']
         
