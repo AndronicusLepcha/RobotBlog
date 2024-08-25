@@ -19,7 +19,7 @@ function Signup() {
       const userdata = await authService.createAccount(data);
       if (userdata) {
         dispatch(UserLogin(userdata));
-        navigate("/login");
+        navigate("/home");
       }
     } catch (error) {
       setError(error.message);
@@ -82,7 +82,7 @@ function Signup() {
             <Button
               type="submit"
               className="w-full bg-cyan-400 rounded-xl py-4 px-4"
-              childern="Create Account"
+              children="Create Account"
               bgColor="bg-green-500"
             />
           </div>
