@@ -109,19 +109,3 @@ def getAllPost(request):
     except Exception as e:
         return Response({"error":"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
     
-    
-@api_view(['POST'])
-def createPost(request):
-    try:
-        if request.method == "POST":
-            title=request.data.get("title")
-            tags=request.data.get("tags")
-            description=request.data("description")
-            postDataObj=PostData(title=title,
-                                 tags=tags,
-                                 description=description)
-            postDataObj.save()
-            return Response({"message":"Post created successfull"},status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({"eror":"Post creation Failed "},status=status.HTTP_400_BAD_REQUEST)
-        
