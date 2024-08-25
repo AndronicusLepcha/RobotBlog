@@ -13,7 +13,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import BlogUsers,PostData,Tag
+from .models import BlogUsers,PostData
 
 
 @api_view(['POST']) 
@@ -73,23 +73,13 @@ def user_logout(request):
 def createPost(request):
     try:
         title = request.data.get("title")
-        tags = request.data.get("tags")  # Expecting a list of tag names
-        description = request.data.get("description")
-
-        tag_objects = []
-        for tag_name in tags:
-            tag, created = Tag.objects.get_or_create(name=tag_name)
-            tag_objects.append(tag)
+        description = request.data.get("content")
         
         # Create PostData object
         postObj = PostData(
             title=title,
             description=description
         )
-        postObj.save()
-        
-        # Add tags to the PostData object
-        postObj.tags.set(tag_objects)  # ManyToManyField
         postObj.save()
         
         return Response({'message': 'Post successfully created.'}, status=status.HTTP_201_CREATED)
@@ -107,5 +97,5 @@ def getAllPost(request):
             postData = PostDataSerializer(data,many=True)
             return Response(postData.data,status=status.HTTP_200_OK)
     except Exception as e:
-        return Response({"error":"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error":f"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
     
