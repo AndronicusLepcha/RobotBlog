@@ -44,14 +44,42 @@ export class AuthService {
   }
 
   async getCurrentUser() {
-    // call api to get the current user
     return null;
-    // return { "user":"Andro" }
   }
-  async logout() {
-    // delete the session
-    // this is an promoise
+
+  async logout(){
+
   }
+  
+  async stripHtmlTags(html) {
+    return html.replace(/<\/?[^>]+>/gi, '');
+  }
+
+  async createPost(postData){
+    console.log(JSON.stringify(postData))
+    let bodyData=postData;
+    const plainText=await this.stripHtmlTags(String(postData.Content))
+    bodyData.content=plainText;
+    console.log(bodyData)
+    try {
+      const response=await fetch(`${conf.API_URL}/blog/createPost`,{
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData)
+      })
+      if(!response.ok){
+        const error = await response.json();
+        throw new Error(error.message)
+      }
+      return "Created POST";
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getAllPosts() {
     try {
       const response = await fetch(`${conf.API_URL}/blog/getAllPost`, {
@@ -62,7 +90,7 @@ export class AuthService {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("daat to return ",data)
+        console.log("data to return ",data)
         return data;
       }
     } catch (error) {
