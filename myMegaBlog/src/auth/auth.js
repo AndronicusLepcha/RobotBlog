@@ -45,28 +45,24 @@ export class AuthService {
 
   async getCurrentUser() {
     try {
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        const response = await fetch(`${conf.API_URL}/blog/getUser`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-          body: JSON.stringify(token),
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`${conf.API_URL}/blog/getUser`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${token}`, // Adjust as needed
         }
-
-        const user = await response.json();
-        return user;
-
-      } else {
-        return null;
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+    
+      const user = await response.json();
+      return user;
+    
     } catch (error) {
-      throw error;
+      console.error('Fetch error:', error);
     }
   }
 

@@ -7,7 +7,10 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PostDataSerializer, UserSerializer
 from .models import PostData
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
+from rest_framework.views import APIView
 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
@@ -99,3 +102,45 @@ def getAllPost(request):
     except Exception as e:
         return Response({"error":f"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
     
+
+class GetUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+        }
+        return Response(user_data, status=status.HTTP_200_OK)
+
+# @api_view(['GET'])
+# def get_user(request):
+#     authentication_classes = [TokenAuthentication]
+#     # Check if the request user is authenticated
+#     headers = request.headers
+#     print("Request headers:")
+#     for key, value in headers.items():
+#         print(f"{key}: {value}")
+
+#     if not request.user.is_authenticated:
+#         return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
+
+#     user = request.user
+#     user_data = {
+#         'id': user.id,
+#         'username': user.username,
+#         'email': user.email,
+#     }
+#     return Response(user_data, status=status.HTTP_200_OK)
+
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def getUser(request):
+#     user = request.user
+#     user_data = {
+#         'id': user.id,
+#         'username': user.username,
+#         'email': user.email,
+#     }
+#     return Response(user_data, status=status.HTTP_200_OK)
