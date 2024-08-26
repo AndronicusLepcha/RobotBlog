@@ -44,37 +44,57 @@ export class AuthService {
   }
 
   async getCurrentUser() {
-    return null;
-  }
-
-  async logout(){
-
-  }
-  
-  async stripHtmlTags(html) {
-    return html.replace(/<\/?[^>]+>/gi, '');
-  }
-
-  async createPost(postData){
-    console.log(JSON.stringify(postData))
-    let bodyData=postData;
-    const plainText=await this.stripHtmlTags(String(postData.Content))
-    bodyData.content=plainText;
-    console.log(bodyData)
     try {
-      const response=await fetch(`${conf.API_URL}/blog/createPost`,{
-        method:"POST",
-        headers:{
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        const response = await fetch(`${conf.API_URL}/blog/getUser`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify(token),
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const user = await response.json();
+        return user;
+
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async logout() {}
+
+  async stripHtmlTags(html) {
+    return html.replace(/<\/?[^>]+>/gi, "");
+  }
+
+  async createPost(postData) {
+    console.log(JSON.stringify(postData));
+    let bodyData = postData;
+    const plainText = await this.stripHtmlTags(String(postData.Content));
+    bodyData.content = plainText;
+    console.log(bodyData);
+    try {
+      const response = await fetch(`${conf.API_URL}/blog/createPost`, {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData)
-      })
-      if(!response.ok){
+        body: JSON.stringify(postData),
+      });
+      if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message)
+        throw new Error(error.message);
       }
       return "Created POST";
-
     } catch (error) {
       throw error;
     }
@@ -90,7 +110,6 @@ export class AuthService {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("data to return ",data)
         return data;
       }
     } catch (error) {
