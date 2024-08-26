@@ -52,7 +52,7 @@ AUTH_USER_MODEL = 'blog_data.BlogUsers'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication', 
     ],
 }
 
@@ -66,19 +66,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
-
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", 
-    "https://yourdomain.com",
+    "http://localhost:5174",  # Allow this origin
 ]
 
-# Allow all localhost origins with any port
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^http://localhost:\d+$',
-    r'^http://127\.0\.0\.1:\d+$',
-    # Add other regex patterns if needed
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173", 
+#     "http://localhost:5173",
+#     "https://yourdomain.com",
+# ]
+
+# # Allow all localhost origins with any port
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r'^http://localhost:\d+$',
+#     r'^http://127\.0\.0\.1:\d+$',
+#     # Add other regex patterns if needed
+# ]
 
 ROOT_URLCONF = 'blogbackend.urls'
 
