@@ -68,11 +68,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", 
-    "https://yourdomain.com",
-]
-
+CORS_ALLOW_ALL_ORIGINS = True
 # Allow all localhost origins with any port
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r'^http://localhost:\d+$',
@@ -109,7 +105,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "robotblogs",
         "USER": "root",
-        "PASSWORD": "root",
+        "PASSWORD": "rootroot",
         "HOST": "localhost",
         "PORT": "3306",
     }

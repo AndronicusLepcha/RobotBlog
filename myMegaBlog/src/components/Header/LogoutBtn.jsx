@@ -5,8 +5,10 @@ import { logout } from '../../store/authSlice'
 function LogoutBtn() {
     const dispatch = useDispatch()
     const logoutHandler = (e)=>{
+        localStorage.removeItem("authToken");
         authService.logout().then(()=>{
             dispatch(logout())
+
         })
     }
   return (

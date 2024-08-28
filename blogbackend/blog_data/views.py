@@ -101,11 +101,8 @@ def createPost(request):
 def getAllPost(request):
     try:
         if request.method == "GET":
-            print("About the fetch tge postdata")
-            data=PostData.objects.all()
-            print("data is ",data)
-            postData = PostDataSerializer(data,many=True)
-            return Response(postData.data,status=status.HTTP_200_OK)
+            data = PostData.objects.all()
+            postData = PostDataSerializer(data, many=True)
+            return Response(postData.data, status=status.HTTP_200_OK)
     except Exception as e:
-        return Response({"error":"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
-        
+        return Response({"error": f"Failed to retrieve the all post: {e}"}, status=status.HTTP_400_BAD_REQUEST)
