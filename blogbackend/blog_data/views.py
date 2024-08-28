@@ -7,8 +7,6 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import PostDataSerializer, UserSerializer
 from .models import PostData
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
 
 from rest_framework.views import APIView
 
@@ -18,6 +16,16 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from .models import BlogUsers,PostData
 
+class GetUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        user_data = {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+        }
+        return Response(user_data, status=status.HTTP_200_OK)
 
 @api_view(['POST']) 
 def register_bloguser(request):
