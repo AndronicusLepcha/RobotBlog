@@ -32,5 +32,4 @@ dist-ssr
 __pycache__
 # db.sqlite3
 media
-
 robotenv
