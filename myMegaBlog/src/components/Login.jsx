@@ -20,7 +20,8 @@ function Login() {
       if (session) {
         const response = await authService.login(data);
         if (response) {
-          localStorage.setItem("authToken", response.token);
+          console.log("response",response)
+          localStorage.setItem("authToken",response.token);
           dispatch(UserLogin(response));
           console.log("login success full ")
           navigate("/home");
@@ -79,7 +80,7 @@ function Login() {
             <Button
               type="submit"
               className="w-full bg-cyan-400 rounded-xl py-4 px-4"
-              childern="Sign In"
+              children="Sign In"
               bgColor="bg-green-500"
             />
           </div>
