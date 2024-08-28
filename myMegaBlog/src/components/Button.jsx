@@ -1,19 +1,19 @@
 import React from "react";
 
 function Button({
-  childern,
-  type = "button",
-  bgColor = "bg-blue",
+  children, // Corrected typo from 'childern' to 'children'
+  type = "button", // Default HTML button type
+  bgColor = "bg-blue-500",
   textColor = "text-white",
-  clasName = "",
+  className = "", 
   ...props
 }) {
   return (
     <button
-      className={`px-4 py-2 rounded-lg ${clasName} ${type} ${bgColor} ${textColor}`}
+      className={`px-4 py-2 rounded-lg ${className} ${type} ${bgColor} ${textColor}`}
       {...props}
     >
-      {childern}
+      {children}
     </button>
   );
 }

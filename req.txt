@@ -1,0 +1,4 @@
+mysqlclient==2.1.1
+django==4.2.3
+djangorestframework==3.14.0
+django-cors-headers==3.14.0

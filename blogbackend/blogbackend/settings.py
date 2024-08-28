@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     
     #apps
     'blog_data',
@@ -45,6 +44,7 @@ INSTALLED_APPS = [
     #frameworks
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     
 ]
 
@@ -52,7 +52,7 @@ AUTH_USER_MODEL = 'blog_data.BlogUsers'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication', 
     ],
 }
 
@@ -66,19 +66,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
+]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5174",  # Allow this origin
+# ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True  # Allow credentials (cookies, authorization headers, etc.)
+from corsheaders.defaults import default_headers
+# Add custom headers to the list of allowed headers
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',  # Allow Authorization header for token-based authentication
+    # Add any other custom headers if needed
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", 
-    "https://yourdomain.com",
-]
-
-# Allow all localhost origins with any port
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r'^http://localhost:\d+$',
-    r'^http://127\.0\.0\.1:\d+$',
-    # Add other regex patterns if needed
-]
 
 ROOT_URLCONF = 'blogbackend.urls'
 
@@ -109,7 +113,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "robotblogs",
         "USER": "root",
-        "PASSWORD": "root",
+        "PASSWORD": "rootroot",
         "HOST": "localhost",
         "PORT": "3306",
     }
