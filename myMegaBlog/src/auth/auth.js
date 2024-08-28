@@ -48,7 +48,7 @@ export class AuthService {
       const token = localStorage.getItem('authToken');
       const response = await fetch(`${conf.API_URL}/blog/getUser`, {
         method: "GET",
-        headers: {
+        headers:{
           "Content-Type": "application/json",
           "Authorization": `Token ${token}`, // Adjust as needed
         }
