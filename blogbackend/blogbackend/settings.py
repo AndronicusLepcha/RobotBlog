@@ -83,6 +83,13 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     # Add any other custom headers if needed
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+# Allow all localhost origins with any port
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^http://localhost:\d+$',
+    r'^http://127\.0\.0\.1:\d+$',
+    # Add other regex patterns if needed
+]
 
 ROOT_URLCONF = 'blogbackend.urls'
 

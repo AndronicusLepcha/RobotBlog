@@ -94,53 +94,8 @@ def createPost(request):
 def getAllPost(request):
     try:
         if request.method == "GET":
-            print("About the fetch tge postdata")
-            data=PostData.objects.all()
-            print("data is ",data)
-            postData = PostDataSerializer(data,many=True)
-            return Response(postData.data,status=status.HTTP_200_OK)
+            data = PostData.objects.all()
+            postData = PostDataSerializer(data, many=True)
+            return Response(postData.data, status=status.HTTP_200_OK)
     except Exception as e:
-        return Response({"error":f"failed to retrieve the all post {e}"},status=status.HTTP_400_BAD_REQUEST)
-    
-
-class GetUserView(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        user = request.user
-        user_data = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-        }
-        return Response(user_data, status=status.HTTP_200_OK)
-
-# @api_view(['GET'])
-# def get_user(request):
-#     authentication_classes = [TokenAuthentication]
-#     # Check if the request user is authenticated
-#     headers = request.headers
-#     print("Request headers:")
-#     for key, value in headers.items():
-#         print(f"{key}: {value}")
-
-#     if not request.user.is_authenticated:
-#         return Response({"detail": "Authentication credentials were not provided."}, status=status.HTTP_401_UNAUTHORIZED)
-
-#     user = request.user
-#     user_data = {
-#         'id': user.id,
-#         'username': user.username,
-#         'email': user.email,
-#     }
-#     return Response(user_data, status=status.HTTP_200_OK)
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def getUser(request):
-#     user = request.user
-#     user_data = {
-#         'id': user.id,
-#         'username': user.username,
-#         'email': user.email,
-#     }
-#     return Response(user_data, status=status.HTTP_200_OK)
+        return Response({"error": f"Failed to retrieve the all post: {e}"}, status=status.HTTP_400_BAD_REQUEST)

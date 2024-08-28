@@ -9,6 +9,7 @@ class BlogUsers(AbstractUser):
 
 class PostData(models.Model):
     title = models.CharField(max_length=100)
+    # tags = models.ManyToManyField('Tag', blank=True)
     description = models.TextField() 
 
     def __str__(self):
