@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_bloguser,user_login,user_logout,createPost,getAllPost,GetUserView
+from .views import register_bloguser,user_login,user_logout,createPost,getAllPost,GetUserView,getPost
 
 urlpatterns = [
     path('getUser', GetUserView.as_view(), name='get_user'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('userLogout',user_logout,name="userLogout"),
     path('createPost',createPost,name="createPost"),
     path('getAllPost',getAllPost,name="getAllPost"),
+    path('post/<int:pk>',getPost,name="getPost"),
 ]
