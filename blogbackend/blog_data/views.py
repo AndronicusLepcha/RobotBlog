@@ -107,3 +107,10 @@ def getAllPost(request):
             return Response(postData.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": f"Failed to retrieve the all post: {e}"}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+def getPost(request,pk):
+    post = PostData.objects.get(pk=pk)
+    serializedData = PostDataSerializer(post)
+    return Response({'postData':serializedData.data},status=status.HTTP_200_OK)
+    
