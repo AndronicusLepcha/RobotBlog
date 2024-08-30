@@ -69,13 +69,16 @@ export class AuthService {
   async logout() {}
 
   async stripHtmlTags(html) {
+    if (typeof html !== 'string') {
+      throw new Error('Input must be a string');
+    }
     return html.replace(/<\/?[^>]+>/gi, "");
   }
 
   async createPost(postData) {
     console.log(JSON.stringify(postData));
     let bodyData = postData;
-    const plainText = await this.stripHtmlTags(String(postData.Content));
+    const plainText = await this.stripHtmlTags(String(postData.content));
     bodyData.content = plainText;
     console.log(bodyData);
     try {
