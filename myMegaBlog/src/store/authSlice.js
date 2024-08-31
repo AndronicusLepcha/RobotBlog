@@ -1,13 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const initialState={
+const initialAuthState={
     status : false,
     userData:null
 }
 
+const initialPostState={
+    post:[],
+    selectedPost:null,
+    loading:false,
+    error:null
+}
+
 const authSlice = createSlice({
     name : 'auth',
-    initialState,
+    initialState:initialAuthState,
     reducers:{
         login:(state,action)=>{
             state.status = true;
@@ -17,6 +24,22 @@ const authSlice = createSlice({
             state.status=false;
             state.userData=null;
         }
+    }
+})
+
+const postSlice = createSlice({
+    name:'post',
+    initialState:initialPostState,
+    reducer:{
+         fetchPostRequest:(state) => {
+                state.loading = true;
+                state.error=null;
+         },
+         fetchPostSuccess:(state,action)=>{
+                state.post=action.payload;
+                state.loading=false;
+         }
+         // add more reducers as per the need 
     }
 })
 
